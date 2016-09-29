@@ -29,6 +29,12 @@ class Player
     {
       died=true;
     }
+    if (sendAll)
+    {
+      int x1=(int)x;
+      int y1=(int)y;
+      c.write("c,"+x1+","+y1+"|");
+    }
   }
   void tutorial()
   {

@@ -20,5 +20,9 @@ class Projectile
     }
     fill(0);
     ellipse(projX, projY, size, size);
+    int x, y;
+    x=(int)projX;
+    y=(int)projY;
+    c.write("b,"+x+","+y+"|");
   }
 }

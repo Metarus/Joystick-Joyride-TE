@@ -7,7 +7,7 @@ Rana Lulla's Project
  */
 float multiplier=0.75;
 int screenState=5, timer, attackPattern, score;
-boolean died, nightMode, justDied, connected;
+boolean died, nightMode, justDied, connected, sendAll;
 String name="", Msg="";
 //String[] scores = new String[2];
 ArrayList<String> scores = new ArrayList<String>();
@@ -162,8 +162,18 @@ void gameCode()
     }
   }
   //Updating everything else
+  if (score%5==0)
+  {
+    c.write(name+"|");
+    sendAll=true;
+  }
   attackUpdate();
   player.movementCode();
+  if (sendAll)
+  {
+    c.write("|");
+  }
+  sendAll=false;
   //Updates the score and multiplier
   score++;
   multiplier+=0.00025; //Rate of 0.25 per 1000 points, just a smaller scale for more accurate updating
@@ -326,6 +336,7 @@ void keyPressed()
       {
         name=Msg;
         screenState=0;
+        c.write("NEW|"+name);
       }
       Msg="";
     }
