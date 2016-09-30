@@ -80,8 +80,8 @@ void draw()
           for (int i=1; i<split1.length; i++)
           {
             String split2[] = split(split1[i], ',');
-            if (split2.length==3)
-            {
+            if (split2.length==3&&!split2[1].equals("")&&!split2[2].equals(""))
+            {              
               if (split2[0].equals("b"))
               {
                 fill(0);
@@ -90,25 +90,22 @@ void draw()
               {
                 fill(255, 0, 0);
               }
-              if (split2[1]!=""&&split2[2]!=""&&split2.length==3)
+              switch (p)
               {
-                switch (p)
-                {
-                case 0:
-                  ellipse(Integer.parseInt(split2[1])/2, Integer.parseInt(split2[2])/2, 5, 5);
-                  break;
-                case 1:
-                  ellipse(Integer.parseInt(split2[1])/2+width/2, Integer.parseInt(split2[2])/2, 5, 5);
-                  break;
-                case 2:
-                  ellipse(Integer.parseInt(split2[1])/2, Integer.parseInt(split2[2])/2+height/2, 5, 5);
-                  break;
-                case 3:
-                  ellipse(Integer.parseInt(split2[1])/2+width/2, Integer.parseInt(split2[2])/2+height/2, 5, 5);
-                  break;
-                }
+              case 0:
+                ellipse(Integer.valueOf(split2[1])/2, Integer.valueOf(split2[2])/2, 5, 5);
+                break;
+              case 1:
+                ellipse(Integer.valueOf(split2[1])/2+width/2, Integer.valueOf(split2[2])/2, 5, 5);
+                break;
+              case 2:
+                ellipse(Integer.valueOf(split2[1])/2, Integer.valueOf(split2[2])/2+height/2, 5, 5);
+                break;
+              case 3:
+                ellipse(Integer.valueOf(split2[1])/2+width/2, Integer.valueOf(split2[2])/2+height/2, 5, 5);
+                break;
               }
-            }
+            } else println(split1[i]);
           }
         }
       }

@@ -162,7 +162,7 @@ void gameCode()
     }
   }
   //Updating everything else
-  if (score%5==0)
+  if (score%2==0)
   {
     c.write(name+"|");
     sendAll=true;
