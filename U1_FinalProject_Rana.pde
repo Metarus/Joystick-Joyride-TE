@@ -6,7 +6,7 @@ Rana Lulla's Project
  controlled game where you dodge bullets and waves of projectiles.
  */
 float multiplier=0.75;
-int screenState=5, timer, attackPattern, score;
+int screenState=5, timer, attackPattern, score, connector;
 boolean died, nightMode, justDied, connected, sendAll;
 String name="", Msg="";
 //String[] scores = new String[2];
@@ -21,7 +21,7 @@ ArrayList<ProjectileNormal> normalProjectiles = new ArrayList<ProjectileNormal>(
 ArrayList<ProjectileHoming> homingProjectiles = new ArrayList<ProjectileHoming>();
 ArrayList<ProjectileHomingAccurate> accurateHomingProjectiles = new ArrayList<ProjectileHomingAccurate>();
 
-Client c;
+Client c, c1, c2, c3, c4;
 Server s;
 
 void setup()
@@ -162,18 +162,8 @@ void gameCode()
     }
   }
   //Updating everything else
-  if (score%2==0)
-  {
-    c.write(name+"|");
-    sendAll=true;
-  }
-  attackUpdate();
   player.movementCode();
-  if (sendAll)
-  {
-    c.write("|");
-  }
-  sendAll=false;
+  attackUpdate();
   //Updates the score and multiplier
   score++;
   multiplier+=0.00025; //Rate of 0.25 per 1000 points, just a smaller scale for more accurate updating
@@ -296,6 +286,7 @@ void receive()
   {
     String input = c.readString();
     String[] end = split(input, '|');
+    println(input);
     if (end[0].equals("START"))
     {
       screenState=1;
@@ -305,6 +296,11 @@ void receive()
     if (end[0].equals("MSG"))
     {
       scores.add(end[1]);
+    }
+    if (end[0].equals(name))
+    {
+      connector=Integer.valueOf(end[1]);
+      println(connector);
     }
   }
 }
@@ -332,6 +328,10 @@ void keyPressed()
       {
         connected=true;
         c = new Client(this, Msg, 12345);
+        c1 = new Client(this, Msg, 12341);
+        c2 = new Client(this, Msg, 12342);
+        c3 = new Client(this, Msg, 12343);
+        c4 = new Client(this, Msg, 12344);
       } else
       {
         name=Msg;

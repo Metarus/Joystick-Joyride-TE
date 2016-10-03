@@ -29,11 +29,22 @@ class Player
     {
       died=true;
     }
-    if (sendAll)
+    int x1=(int)x;
+    int y1=(int)y;
+    switch(connector)
     {
-      int x1=(int)x;
-      int y1=(int)y;
-      c.write("c,"+x1+","+y1+"|");
+    case 0:
+      c1.write("c,"+x1+","+y1+"|");
+      break;
+    case 1:
+      c2.write("c,"+x1+","+y1+"|");
+      break;
+    case 2:
+      c3.write("c,"+x1+","+y1+"|");
+      break;
+    case 3:
+      c4.write("c,"+x1+","+y1+"|");
+      break;
     }
   }
   void tutorial()
