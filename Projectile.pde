@@ -23,20 +23,23 @@ class Projectile
     int x, y;
     x=(int)projX;
     y=(int)projY;
-    switch(connector)
+    if (projX>0&&projX<width&&projY>0&&projY<height)
     {
-    case 0:
-      c1.write("b,"+x+","+y+"|");
-      break;
-    case 1:
-      c2.write("b,"+x+","+y+"|");
-      break;
-    case 2:
-      c3.write("b,"+x+","+y+"|");
-      break;
-    case 3:
-      c4.write("b,"+x+","+y+"|");
-      break;
+      switch(connector)
+      {
+      case 0:
+        c1.write("b,"+x+","+y+"|");
+        break;
+      case 1:
+        c2.write("b,"+x+","+y+"|");
+        break;
+      case 2:
+        c3.write("b,"+x+","+y+"|");
+        break;
+      case 3:
+        c4.write("b,"+x+","+y+"|");
+        break;
+      }
     }
   }
 }
