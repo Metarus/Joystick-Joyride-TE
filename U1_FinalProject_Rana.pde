@@ -32,6 +32,7 @@ void setup()
   music = minim.loadFile("ASGORE.mp3");
   imageMode(CENTER);
   fullScreen(P2D);
+  //size(1280, 800);
   textAlign(CENTER);
   noCursor();
 }

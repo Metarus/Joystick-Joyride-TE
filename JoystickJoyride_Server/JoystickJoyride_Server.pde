@@ -5,9 +5,10 @@ float timer;
 Client c;
 Server s, s1, s2, s3, s4;
 
-int cNum;
+int cNum, playerCount, playersDead;
 String[] players = new String[4];
 boolean[] playersTrue = new boolean[4];
+boolean gameRunning;
 
 void setup()
 {
@@ -22,15 +23,33 @@ void setup()
   textAlign(CENTER);
   for (int i=0; i<4; i++)
   {
-    players[i]="";
+    players[i]="None";
   }
 }
 void draw()
 {
+  if (gameRunning==false)
+  {
+    fill(0);
+    background(0);
+    fill(255);
+    textSize(30);
+    text(players[0], width/4, height/4);
+    text(players[1], width/4+width/2, height/4);
+    text(players[2], width/4, height/4+height/2);
+    text(players[3], width/4+width/2, height/4+height/2);
+    textSize(100);
+    text("Joystick Joyride", width/2, height/2);
+    textSize(50);
+    text("Tournament Edition", width/2, height/2+80);
+  }
   if (mousePressed)
   {
+    background(255);
     timer=millis()+1000;
     s.write("START|");
+    playersDead=0;
+    gameRunning=true;
   }
   if (millis()>timer)
   {
@@ -41,12 +60,12 @@ void draw()
   if (c!=null)
   {
     String input = c.readString();
-    println(input);
     String split1[] = split(input, '|');
-    
+
     if (split1[0].equals("DIED"))
     {
       s.write("MSG|"+split1[1]);
+      playersDead++;
     }
     if (split1[0].equals("NEW"))
     {
@@ -56,12 +75,16 @@ void draw()
         {
           players[i]=split1[1];
           playersTrue[i]=true;
-          println(split1[1]+"|"+i);
           s.write(split1[1]+"|"+i);
+          playerCount++;
           break;
         }
       }
     }
+  }
+  if (playersDead==playerCount)
+  {
+    gameRunning=false;
   }
   for (cNum=0; cNum<4; cNum++)
   {
@@ -146,65 +169,7 @@ void display()
             break;
           }
         }
-      } else
-      {
-        skip=true;
       }
     }
   }
 }
-
-/*
-      for (int p=0; p<4; p++)
- {
- if (split1[0].equals(players[p]))
- {
- fill(255);
- switch (p)
- {
- case 0:
- rect(0, 0, width/2, height/2);
- break;
- case 1:
- rect(width/2, 0, width, height/2);
- break;
- case 2:
- rect(0, height/2, width/2, height);
- break;
- case 3:
- rect(width/2, height/2, width, height);
- break;
- }
- for (int i=1; i<split1.length; i++)
- {
- String split2[] = split(split1[i], ',');
- if (split2.length==3&&!split2[1].equals("")&&!split2[2].equals(""))
- {              
- if (split2[0].equals("b"))
- {
- fill(0);
- }
- if (split2[0].equals("c"))
- {
- fill(255, 0, 0);
- }
- switch (p)
- {
- case 0:
- ellipse(Integer.valueOf(split2[1])/2, Integer.valueOf(split2[2])/2, 5, 5);
- break;
- case 1:
- ellipse(Integer.valueOf(split2[1])/2+width/2, Integer.valueOf(split2[2])/2, 5, 5);
- break;
- case 2:
- ellipse(Integer.valueOf(split2[1])/2, Integer.valueOf(split2[2])/2+height/2, 5, 5);
- break;
- case 3:
- ellipse(Integer.valueOf(split2[1])/2+width/2, Integer.valueOf(split2[2])/2+height/2, 5, 5);
- break;
- }
- } 
- }
- }
- }
- */
