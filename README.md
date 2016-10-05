@@ -3,7 +3,7 @@
 Tournament Edition
 
 <h2>Description</h2>
-I effectively made a projectile dodging game, and made it networked. That's all it really is, which is a very simple idea, but not so much in terms of the code required.
+I effectively made a projectile dodging game, and made it networked. That's all it really is, which is a very simple idea, but not so much in terms of the code required. The collisions and all are handled by the clients, and only submits the locations to the server for the sake of viewing. The server/host has nearly no interaction with the clients, only takes in where each projectile is.
 
 <h2>Inspiration</h2>
 This takes me back to the days, when I was working on my first project. I initially planned to create a sword throwing game using vectors of the mouse relative to a specific point, which soon after I ended up forgetting to set a specific vector and instead had the projectile (which was at the time a little red dot) moving relative to my mouse, and thus my movement code was born. After that, I went on and made a game around it which involved projectiles flying at you and dodging them, similar to my game.
