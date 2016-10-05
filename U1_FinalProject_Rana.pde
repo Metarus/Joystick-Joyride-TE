@@ -32,12 +32,13 @@ void setup()
   music = minim.loadFile("ASGORE.mp3");
   imageMode(CENTER);
   fullScreen(P2D);
-  //size(1280, 800);
+  //size(1280, 800, P2D);
   textAlign(CENTER);
   noCursor();
 }
 void draw()
 {
+  println(connector);
   //Basic screenState switch
   switch(screenState)
   {
@@ -118,47 +119,52 @@ void gameCode()
     ellipse(player.x, player.y, 600, 600);
   }
   //Runs randomiser every 5 seconds
+
   if (c.available()!=0)
   {
     String input = c.readString();
-    String[] end = split(input, '|');
-    if (end[0].equals("START"))
+    String[] split1 = split(input, "||");
+    for (int i=0; i<split1.length; i++)
     {
-      reset();
-    }
-    if (end[0].equals("WIN"))
-    {
-      print(end[1]);
-    }
-    if (end[0].equals("MSG"))
-    {      
-      scores.add(end[1]);
-    }
-    if (end[0].equals("ATK"))
-    {
-      attackPattern=Integer.parseInt(end[1]);
-      player.x=width/2;
-      player.y=3*(height/4);
-      switch(attackPattern)
+      String[] end = split(split1[i], '|');
+      if (end[0].equals("START"))
       {
-      case 1: 
-        Attack1();
-        break;
-      case 2:
-        Attack2();
-        break;
-      case 3:
-        Attack3();
-        break;
-      case 4:
-        Attack4();
-        break;
-      case 5:
-        Attack5();
-        break;
-      case 6:
-        Attack6();
-        break;
+        reset();
+      }
+      if (end[0].equals("WIN"))
+      {
+        print(end[1]);
+      }
+      if (end[0].equals("MSG"))
+      {      
+        scores.add(end[1]);
+      }
+      if (end[0].equals("ATK"))
+      {
+        attackPattern=Integer.parseInt(end[1]);
+        player.x=width/2;
+        player.y=3*(height/4);
+        switch(attackPattern)
+        {
+        case 1: 
+          Attack1();
+          break;
+        case 2:
+          Attack2();
+          break;
+        case 3:
+          Attack3();
+          break;
+        case 4:
+          Attack4();
+          break;
+        case 5:
+          Attack5();
+          break;
+        case 6:
+          Attack6();
+          break;
+        }
       }
     }
   }
@@ -286,22 +292,26 @@ void receive()
   if (c.available()!=0)
   {
     String input = c.readString();
-    String[] end = split(input, '|');
-    println(input);
-    if (end[0].equals("START"))
+    String[] split1 = split(input, "||");
+    for (int i=0; i<split1.length; i++)
     {
-      screenState=1;
-      reset();
-      nightMode=false;
-    }
-    if (end[0].equals("MSG"))
-    {
-      scores.add(end[1]);
-    }
-    if (end[0].equals(name))
-    {
-      connector=Integer.valueOf(end[1]);
-      println(connector);
+      String[] end = split(split1[i], '|');
+      println(input);
+      if (end[0].equals("START"))
+      {
+        screenState=1;
+        reset();
+        nightMode=false;
+      }
+      if (end[0].equals("MSG"))
+      {
+        scores.add(end[1]);
+      }
+      if (end[0].equals(name))
+      {
+        connector=Integer.valueOf(end[1]);
+        println(connector);
+      }
     }
   }
 }

@@ -47,7 +47,7 @@ void draw()
   {
     background(255);
     timer=millis()+1000;
-    s.write("START|");
+    s.write("START||"+players[0]+"|"+0+"||"+players[1]+"|"+1+"||"+players[2]+"|"+2+"||"+players[3]+"|"+3+"||");
     playersDead=0;
     gameRunning=true;
   }
@@ -75,7 +75,6 @@ void draw()
         {
           players[i]=split1[1];
           playersTrue[i]=true;
-          s.write(split1[1]+"|"+i);
           playerCount++;
           break;
         }
@@ -113,22 +112,6 @@ void display()
   {
     String input = c.readString();
     String split0[] = split(input, '|');
-    fill(255);
-    switch (cNum)
-    {
-    case 0:
-      rect(0, 0, width/2, height/2);
-      break;
-    case 1:
-      rect(width/2, 0, width, height/2);
-      break;
-    case 2:
-      rect(0, height/2, width/2, height);
-      break;
-    case 3:
-      rect(width/2, height/2, width, height);
-      break;
-    }
     for (int i=0; i<split0.length; i++)
     {
       boolean skip=false;
@@ -151,6 +134,22 @@ void display()
           }
           if (split2[0].equals("c"))
           {
+            fill(255);
+            switch (cNum)
+            {
+            case 0:
+              rect(0, 0, width/2, height/2);
+              break;
+            case 1:
+              rect(width/2, 0, width, height/2);
+              break;
+            case 2:
+              rect(0, height/2, width/2, height);
+              break;
+            case 3:
+              rect(width/2, height/2, width, height);
+              break;
+            }
             fill(255, 0, 0);
           }
           switch (cNum)
