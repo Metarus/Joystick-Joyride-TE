@@ -1,7 +1,7 @@
 import processing.net.*;
 
 float timer;
-
+//Setting up all 5 servers; one for each
 Client c;
 Server s, s1, s2, s3, s4;
 
@@ -14,6 +14,7 @@ void setup()
 {
   fullScreen();
   background(255);
+  //Creating all the servers
   s = new Server(this, 12345);
   s1 = new Server(this, 12341);
   s2 = new Server(this, 12342);
@@ -30,6 +31,7 @@ void draw()
 {
   if (gameRunning==false)
   {
+    //Start screen
     fill(0);
     background(0);
     fill(255);
@@ -45,17 +47,21 @@ void draw()
   }
   if (mousePressed)
   {
+    //Starting the code
     background(255);
     timer=millis()+1000;
+    //Sending all of the players connections in case it doesn't get through the first time
     s.write("START||"+players[0]+"|"+0+"||"+players[1]+"|"+1+"||"+players[2]+"|"+2+"||"+players[3]+"|"+3+"||");
     playersDead=0;
     gameRunning=true;
   }
   if (millis()>timer)
   {
+    //Sending out the next attack pattern
     s.write("ATK|"+(int)random(1, 7));
     timer=millis()+5000;
   }
+  //Doing the general detection
   c = s.available();
   if (c!=null)
   {
@@ -85,6 +91,7 @@ void draw()
   {
     gameRunning=false;
   }
+  //Receiving all of the players enemy movements
   for (cNum=0; cNum<4; cNum++)
   {
     switch(cNum)
@@ -110,6 +117,7 @@ void display()
 {
   if (c!=null)
   {
+    //Doing the general splitting into all of the sections within each channel
     String input = c.readString();
     String split0[] = split(input, '|');
     for (int i=0; i<split0.length; i++)
@@ -117,6 +125,7 @@ void display()
       boolean skip=false;
       String test=split0[i];
       String split2[] = split(split0[i], ',');
+      //Splitting it into each seperate variable
       for (int a=0; a<test.length(); a++)
       {
         if (test.charAt(a)=='-')
@@ -126,6 +135,7 @@ void display()
       }
       if (skip==false)
       {
+        //Doing final checks before proceeding
         if (split2.length==3&&!split2[1].equals("")&&!split2[2].equals(""))
         {              
           if (split2[0].equals("b"))
@@ -134,6 +144,7 @@ void display()
           }
           if (split2[0].equals("c"))
           {
+            //Characters are always at the start, so if there are multiple characters then only the last one
             fill(255);
             switch (cNum)
             {
